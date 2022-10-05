@@ -1,2 +1,2 @@
 # Confusion-Matrix
-![image](picture or gif url)
+![image](https://github.com/dylankuo0402/Confusion-Matrix/blob/master/img.png)
