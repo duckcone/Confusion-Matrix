@@ -36,15 +36,13 @@ def draw():
     FP = 0
     FN = 0
     TP = 0
-    critical_point = roc_scale.get()
+    critical_point = roc_scale.get() # 臨界點
 
-    
-
-    datay=list()
-    data=list()
-    datax1=list()
-    datax2=list()
-    datax=list()
+    datay = list()
+    data = list()
+    datax1 = list()
+    datax2 = list()
+    datax = list()
 
     for i in range(data_size):
         datay.append(0)
@@ -53,12 +51,13 @@ def draw():
     for i in range(data_size):
         datay.append(1)
 
-    mu1 = mu1_scale.get()
-    sigma1 = 1
-    mu2 = mu2_scale.get()
-    sigma2 = 1
+    mu1 = mu1_scale.get() # 取得第一個平均值
+    sigma1 = 1 # 取得第一個標準差
+    mu2 = mu2_scale.get() # 取得第二個平均值
+    sigma2 = 1 # 取得第二個標準差
 
-    datax1 = list(np.random.normal(mu1, sigma1, data_size))
+    # 常態分佈: 平均數、標準差、資料大小
+    datax1 = list(np.random.normal(mu1, sigma1, data_size)) 
     datax2 = list(np.random.normal(mu2, sigma2, data_size))
     datax1.sort()
     datax2.sort()
@@ -69,7 +68,7 @@ def draw():
             TP += 1
         else:
             FN += 1
-        
+
         if(datax1[i] > critical_point):
             FP += 1
         else:
@@ -78,19 +77,17 @@ def draw():
         sensitivity = TP / (TP + FN)
         specificity = TN / (TN + FP)
 
-    
-
-    _, bins_edge1, _ = ax1.hist(datax1, bins=50, density=True, alpha=0.5)
+    # 繪製直方圖
+    _, bins_edge1, _ = ax1.hist(datax1, bins=50, density=True, alpha=0.5) 
     _, bins_edge2, _ = ax3.hist(datax2, bins=50, density=True, alpha=0.5)
     ax2.hist(datax1, bins=50, density=True, alpha=0.5)
     ax2.hist(datax2, bins=50, density=True, alpha=0.5)
 
-
-    normpdf1 = scipy.stats.norm.pdf(bins_edge1, mu1, sigma1)
+    # 直方圖轉換常態分佈曲線
+    normpdf1 = scipy.stats.norm.pdf(bins_edge1, mu1, sigma1) 
     normpdf2 = scipy.stats.norm.pdf(bins_edge2, mu2, sigma2)
 
-
-    fpr,tpr,t =roc_curve(datay,datax)
+    fpr,tpr,t = roc_curve(datay,datax)
     roc_auc = auc(fpr,tpr)
 
     lw = 3
